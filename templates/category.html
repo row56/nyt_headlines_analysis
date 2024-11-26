@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New York Times News Reader - {{ category }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>New York Times News Reader - {{ category }}</h1>
+    </div>
+
+    <div class="container" role="main">
+        <nav>
+            <a href="{{ url_for('index') }}">All</a>
+            {% for cat in categories %}
+                <a href="{{ url_for('category', category=cat.lower()) }}"
+                    {% if cat.lower() == category.lower() %}class="active"{% endif %}>
+                    {{ cat }}
+                </a>
+            {% endfor %}
+        </nav>
+
+        <div class="article-grid">
+            {% for article in articles %}
+                <div class="article-tile">
+                    <h2><a href="{{ url_for('article', url=article.link) }}">{{ article.title }}</a></h2>
+                    <div class="article-meta">
+                        <span class="date">{{ article.date }}</span>
+                        <span class="category-tag">{{ article.predicted_category }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
